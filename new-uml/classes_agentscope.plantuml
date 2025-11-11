@@ -1,0 +1,991 @@
+@startuml classes_agentscope
+set namespaceSeparator none
+class "ACEAccuracy" as agentscope.evaluate._ace_benchmark._ace_metric.ACEAccuracy {
+  state : list[dict]
+}
+class "ACEBenchmark" as agentscope.evaluate._ace_benchmark._ace_benchmark.ACEBenchmark {
+  data_dir : bytes, str
+  data_dir_url : str
+  data_files : list[str]
+  data_subdir : list[str]
+  dataset : list
+  ground_truth_dir : str
+}
+class "ACEPhone" as agentscope.evaluate._ace_benchmark._ace_tools_zh.ACEPhone {
+  get_current_state() -> list[dict]
+  get_tool_function(name: str) -> Callable
+  load_initial_config(initial_config: dict) -> None
+  login_device() -> dict[str, bool | str]
+  turn_on_wifi() -> dict[str, bool | str]
+}
+class "ACEProcessAccuracy" as agentscope.evaluate._ace_benchmark._ace_metric.ACEProcessAccuracy {
+  mile_stone : list[str]
+}
+class "AgentBase" as agentscope.agent._agent_base.AgentBase {
+  id : str
+  msg_queue : NoneType, Queue
+  supported_hook_types : list[str]
+  clear_class_hooks(hook_type: AgentHookTypes | None) -> None
+  clear_instance_hooks(hook_type: AgentHookTypes | None) -> None
+  disable_console_output() -> None
+  {abstract}handle_interrupt() -> Msg
+  interrupt(msg: Msg | list[Msg] | None) -> None
+  {abstract}observe(msg: Msg | list[Msg] | None) -> None
+  print(msg: Msg, last: bool) -> None
+  register_class_hook(hook_type: AgentHookTypes, hook_name: str, hook: Callable) -> None
+  register_instance_hook(hook_type: AgentHookTypes, hook_name: str, hook: Callable) -> None
+  remove_class_hook(hook_type: AgentHookTypes, hook_name: str) -> None
+  remove_instance_hook(hook_type: AgentHookTypes, hook_name: str) -> None
+  remove_subscribers(msghub_name: str) -> None
+  {abstract}reply() -> Msg
+  reset_subscribers(msghub_name: str, subscribers: list['AgentBase']) -> None
+  set_console_output_enabled(enabled: bool) -> None
+  set_msg_queue_enabled(enabled: bool, queue: Queue | None) -> None
+}
+class "<color:red>AgentOrientedExceptionBase</color>" as agentscope.exception._exception_base.AgentOrientedExceptionBase {
+  message : str
+}
+class "AgentScopeEmbedding" as agentscope.memory._mem0_utils.AgentScopeEmbedding {
+  agentscope_model : NoneType
+  embed(text: str | List[str], memory_action: Literal['add', 'search', 'update'] | None) -> List[float]
+}
+class "AgentScopeLLM" as agentscope.memory._mem0_utils.AgentScopeLLM {
+  agentscope_model : NoneType
+  generate_response(messages: List[Dict[str, str]], response_format: Any | None, tools: List[Dict] | None, tool_choice: str) -> str
+}
+class "AnthropicChatFormatter" as agentscope.formatter._anthropic_formatter.AnthropicChatFormatter {
+  support_multiagent : bool
+  support_tools_api : bool
+  support_vision : bool
+  supported_blocks : list[type]
+}
+class "AnthropicChatModel" as agentscope.model._anthropic_model.AnthropicChatModel {
+  client : AsyncAnthropic
+  generate_kwargs : dict
+  max_tokens : int
+  thinking : dict | None
+}
+class "AnthropicMultiAgentFormatter" as agentscope.formatter._anthropic_formatter.AnthropicMultiAgentFormatter {
+  conversation_history_prompt : str
+  support_multiagent : bool
+  support_tools_api : bool
+  support_vision : bool
+  supported_blocks : list[type]
+}
+class "AnthropicTokenCounter" as agentscope.token._anthropic_token_counter.AnthropicTokenCounter {
+  client : AsyncAnthropic
+  model_name : str
+  count(messages: list[dict], tools: list[dict] | None) -> int
+}
+class "AudioBlock" as agentscope.message._message_block.AudioBlock {
+  source : Required[Base64Source | URLSource]
+  type : Required[Literal['audio']]
+}
+class "Base64Source" as agentscope.message._message_block.Base64Source {
+  data : Required[str]
+  media_type : Required[str]
+  type : Required[Literal['base64']]
+}
+class "BenchmarkBase" as agentscope.evaluate._benchmark_base.BenchmarkBase {
+  description : str
+  name : str
+}
+class "ChatModelBase" as agentscope.model._model_base.ChatModelBase {
+  model_name : str
+  stream : bool
+}
+class "ChatResponse" as agentscope.model._model_response.ChatResponse {
+  content : Sequence[TextBlock | ToolUseBlock | ThinkingBlock | AudioBlock]
+  created_at : str
+  id : str
+  metadata : dict[str, JSONSerializableObject] | None
+  type : Literal['chat']
+  usage : ChatUsage | None
+}
+class "ChatUsage" as agentscope.model._model_usage.ChatUsage {
+  input_tokens : int
+  output_tokens : int
+  time : float
+  type : Literal['chat']
+}
+class "DashScopeChatFormatter" as agentscope.formatter._dashscope_formatter.DashScopeChatFormatter {
+  support_multiagent : bool
+  support_tools_api : bool
+  support_vision : bool
+  supported_blocks : list[type]
+}
+class "DashScopeChatModel" as agentscope.model._dashscope_model.DashScopeChatModel {
+  api_key : str
+  enable_thinking : bool | None
+  generate_kwargs : dict
+}
+class "DashScopeMultiAgentFormatter" as agentscope.formatter._dashscope_formatter.DashScopeMultiAgentFormatter {
+  conversation_history_prompt : str
+  support_multiagent : bool
+  support_tools_api : bool
+  support_vision : bool
+  supported_blocks : list[type]
+}
+class "DashScopeMultiModalEmbedding" as agentscope.embedding._dashscope_multimodal_embedding.DashScopeMultiModalEmbedding {
+  api_key : str
+  batch_size_limit : int
+  embedding_cache : EmbeddingCacheBase | None
+  supported_modalities : list[str]
+}
+class "DashScopeTextEmbedding" as agentscope.embedding._dashscope_embedding.DashScopeTextEmbedding {
+  api_key : str
+  batch_size_limit : int
+  embedding_cache : EmbeddingCacheBase | None
+  supported_modalities : list[str]
+}
+class "DeepSeekChatFormatter" as agentscope.formatter._deepseek_formatter.DeepSeekChatFormatter {
+  support_multiagent : bool
+  support_tools_api : bool
+  support_vision : bool
+  supported_blocks : list[type]
+}
+class "DeepSeekMultiAgentFormatter" as agentscope.formatter._deepseek_formatter.DeepSeekMultiAgentFormatter {
+  conversation_history_prompt : str
+  support_multiagent : bool
+  support_tools_api : bool
+  support_vision : bool
+  supported_blocks : list[type]
+}
+class "DefaultPlanToHint" as agentscope.plan._plan_notebook.DefaultPlanToHint {
+  at_the_beginning : str
+  at_the_end : str
+  hint_prefix : str
+  hint_suffix : str
+  no_plan : str
+  when_a_subtask_in_progress : str
+  when_no_subtask_in_progress : str
+}
+class "DictMixin" as agentscope._utils._mixin.DictMixin {
+}
+class "DocMetadata" as agentscope.rag._document.DocMetadata {
+  chunk_id : int
+  content : TextBlock | ImageBlock | VideoBlock
+  doc_id : str
+  total_chunks : int
+}
+class "Document" as agentscope.rag._document.Document {
+  embedding : Embedding | None
+  id : str
+  metadata
+  score : float | None
+}
+class "EmbeddingCacheBase" as agentscope.embedding._cache_base.EmbeddingCacheBase {
+  {abstract}clear() -> None
+  {abstract}remove(identifier: JSONSerializableObject) -> None
+  {abstract}retrieve(identifier: JSONSerializableObject) -> List[Embedding] | None
+  {abstract}store(embeddings: List[Embedding], identifier: JSONSerializableObject, overwrite: bool) -> None
+}
+class "EmbeddingModelBase" as agentscope.embedding._embedding_base.EmbeddingModelBase {
+  dimensions : int
+  model_name : str
+  supported_modalities : list[str]
+}
+class "EmbeddingResponse" as agentscope.embedding._embedding_response.EmbeddingResponse {
+  created_at : str
+  embeddings : List[Embedding]
+  id : str
+  source : Literal['cache', 'api']
+  type : Literal['embedding']
+  usage : EmbeddingUsage | None
+}
+class "EmbeddingUsage" as agentscope.embedding._embedding_usage.EmbeddingUsage {
+  time : float
+  tokens : int | None
+  type : Literal['embedding']
+}
+class "EvaluatorBase" as agentscope.evaluate._evaluator._evaluator_base.EvaluatorBase {
+  benchmark
+  n_repeat : int
+  name : str
+  storage
+  aggregate() -> None
+  {abstract}run(solution: Callable[[Task, Callable], Coroutine[Any, Any, SolutionOutput]]) -> None
+}
+class "EvaluatorStorageBase" as agentscope.evaluate._evaluator_storage._evaluator_storage_base.EvaluatorStorageBase {
+  {abstract}aggregation_result_exists() -> bool
+  {abstract}evaluation_result_exists(task_id: str, repeat_id: str, metric_name: str) -> bool
+  {abstract}get_agent_pre_print_hook(task_id: str, repeat_id: str) -> Callable[[AgentBase, dict], None]
+  {abstract}get_evaluation_result(task_id: str, repeat_id: str, metric_name: str) -> MetricResult
+  {abstract}get_solution_result(task_id: str, repeat_id: str) -> SolutionOutput
+  {abstract}save_aggregation_result(aggregation_result: dict) -> None
+  {abstract}save_evaluation_meta(meta_info: dict) -> None
+  {abstract}save_evaluation_result(task_id: str, repeat_id: str, evaluation: MetricResult) -> None
+  {abstract}save_solution_result(task_id: str, repeat_id: str, output: SolutionOutput) -> None
+  {abstract}solution_result_exists(task_id: str, repeat_id: str) -> bool
+}
+class "FanoutPipeline" as agentscope.pipeline._class.FanoutPipeline {
+  agents : list[AgentBase]
+  enable_gather : bool
+}
+class "FileEmbeddingCache" as agentscope.embedding._file_cache.FileEmbeddingCache {
+  cache_dir : str
+  max_cache_size : int | None
+  max_file_number : int | None
+  clear() -> None
+  remove(identifier: JSONSerializableObject) -> None
+  retrieve(identifier: JSONSerializableObject) -> List[Embedding] | None
+  store(embeddings: List[Embedding], identifier: JSONSerializableObject, overwrite: bool) -> None
+}
+class "FileEvaluatorStorage" as agentscope.evaluate._evaluator_storage._file_evaluator_storage.FileEvaluatorStorage {
+  AGENT_PRINTING_LOG : str
+  EVALUATION_DIR_NAME : str
+  EVALUATION_META_FILE : str
+  EVALUATION_RESULT_FILE : str
+  SOLUTION_FILE_NAME : str
+  save_dir : str
+  aggregation_result_exists() -> bool
+  evaluation_result_exists(task_id: str, repeat_id: str, metric_name: str) -> bool
+  get_agent_pre_print_hook(task_id: str, repeat_id: str) -> Callable[[AgentBase, dict], None]
+  get_evaluation_result(task_id: str, repeat_id: str, metric_name: str) -> MetricResult
+  get_solution_result(task_id: str, repeat_id: str) -> SolutionOutput
+  save_aggregation_result(aggregation_result: dict) -> None
+  save_evaluation_meta(meta_info: dict) -> None
+  save_evaluation_result(task_id: str, repeat_id: str, evaluation: MetricResult) -> None
+  save_solution_result(task_id: str, repeat_id: str, output: SolutionOutput) -> None
+  solution_result_exists(task_id: str, repeat_id: str) -> bool
+}
+class "FoodPlatformApi" as agentscope.evaluate._ace_benchmark._ace_tools_api._food_platform_api.FoodPlatformApi {
+  logged_in_users : list[str]
+  merchant_list : dict[str, dict]
+  orders : list
+  tool_functions : list[str]
+  users : dict
+  add_food_delivery_order(username: str, merchant_name: str, items: list[dict[str, str | int]]) -> dict[str, bool | str]
+  check_balance(user_name: str) -> float
+  get_products(merchant_name: str) -> list[dict[str, str | float]] | dict[str, bool | str]
+  get_state_dict() -> dict
+  login_food_platform(username: str, password: str) -> dict[str, bool | str]
+  search_orders(keyword: str) -> dict[str, bool | str | list[dict[str, str | float]]]
+  view_logged_in_users() -> dict
+  view_orders(user_name: str) -> dict[str, bool | str | list[dict[str, str | int | float]]]
+}
+class "FormatterBase" as agentscope.formatter._formatter_base.FormatterBase {
+  assert_list_of_msgs(msgs: list[Msg]) -> None
+  convert_tool_result_to_string(output: str | List[TextBlock | ImageBlock | AudioBlock]) -> str
+  {abstract}format() -> list[dict[str, Any]]
+}
+class "GeminiChatFormatter" as agentscope.formatter._gemini_formatter.GeminiChatFormatter {
+  support_multiagent : bool
+  support_tools_api : bool
+  support_vision : bool
+  supported_blocks : list[type]
+  supported_extensions : dict[str, list[str]]
+}
+class "GeminiChatModel" as agentscope.model._gemini_model.GeminiChatModel {
+  client : Client
+  generate_kwargs : dict
+  thinking_config : dict | None
+}
+class "GeminiMultiAgentFormatter" as agentscope.formatter._gemini_formatter.GeminiMultiAgentFormatter {
+  conversation_history_prompt : str
+  support_multiagent : bool
+  support_tools_api : bool
+  support_vision : bool
+  supported_blocks : list[type]
+}
+class "GeminiTextEmbedding" as agentscope.embedding._gemini_embedding.GeminiTextEmbedding {
+  client : Client
+  embedding_cache : EmbeddingCacheBase | None
+  supported_modalities : list[str]
+}
+class "GeminiTokenCounter" as agentscope.token._gemini_token_counter.GeminiTokenCounter {
+  client : Client
+  model_name : str
+  count(messages: list[dict], tools: list[dict] | None) -> int
+}
+class "GeneralEvaluator" as agentscope.evaluate._evaluator._general_evaluator.GeneralEvaluator {
+  benchmark
+  n_repeat : int
+  n_workers : int
+  run(solution: Callable[[Task, Callable], Coroutine[Any, Any, SolutionOutput]]) -> None
+  run_evaluation(task: Task, repeat_id: str, solution_output: SolutionOutput) -> None
+  run_solution(repeat_id: str, task: Task, solution: Callable[[Task, Callable], Awaitable[SolutionOutput]]) -> None
+}
+class "HttpStatefulClient" as agentscope.mcp._http_stateful_client.HttpStatefulClient {
+  client
+  transport : Literal['streamable_http', 'sse']
+}
+class "HttpStatelessClient" as agentscope.mcp._http_stateless_client.HttpStatelessClient {
+  client_config
+  stateful : bool
+  transport : Literal['streamable_http', 'sse']
+  get_callable_function(func_name: str, wrap_tool_result: bool) -> Callable[..., Awaitable[mcp.types.CallToolResult | ToolResponse]]
+  get_client() -> _AsyncGeneratorContextManager[Any]
+  list_tools() -> List[mcp.types.Tool]
+}
+class "HuggingFaceTokenCounter" as agentscope.token._huggingface_token_counter.HuggingFaceTokenCounter {
+  tokenizer : PreTrainedTokenizerFast
+  count(messages: list[dict], tools: list[dict] | None) -> int
+}
+class "ImageBlock" as agentscope.message._message_block.ImageBlock {
+  source : Required[Base64Source | URLSource]
+  type : Required[Literal['image']]
+}
+class "ImageReader" as agentscope.rag._reader._image_reader.ImageReader {
+  get_doc_id(image_path: str) -> str
+}
+class "InMemoryMemory" as agentscope.memory._in_memory_memory.InMemoryMemory {
+  content : list[Msg]
+  add(memories: Union[list[Msg], Msg, None], allow_duplicates: bool) -> None
+  clear() -> None
+  delete(index: Union[Iterable, int]) -> None
+  get_memory() -> list[Msg]
+  load_state_dict(state_dict: dict, strict: bool) -> None
+  {abstract}retrieve() -> None
+  size() -> int
+  state_dict() -> dict
+}
+class "InMemoryPlanStorage" as agentscope.plan._in_memory_storage.InMemoryPlanStorage {
+  plans : OrderedDict
+  add_plan(plan: Plan, override: bool) -> None
+  delete_plan(plan_id: str) -> None
+  get_plan(plan_id: str) -> Plan | None
+  get_plans() -> list[Plan]
+}
+class "JSONSession" as agentscope.session._json_session.JSONSession {
+  save_dir : str
+  load_session_state(session_id: str, allow_not_exist: bool) -> None
+  save_session_state(session_id: str) -> None
+}
+class "KnowledgeBase" as agentscope.rag._knowledge_base.KnowledgeBase {
+  embedding_model
+  embedding_store
+  {abstract}add_documents(documents: list[Document]) -> None
+  {abstract}retrieve(query: str, limit: int, score_threshold: float | None) -> list[Document]
+  retrieve_knowledge(query: str, limit: int, score_threshold: float | None) -> ToolResponse
+}
+class "LongTermMemoryBase" as agentscope.memory._long_term_memory_base.LongTermMemoryBase {
+  {abstract}record(msgs: list[Msg | None]) -> None
+  {abstract}record_to_memory(thinking: str, content: list[str]) -> ToolResponse
+  {abstract}retrieve(msg: Msg | list[Msg] | None) -> str
+  {abstract}retrieve_from_memory(keywords: list[str]) -> ToolResponse
+}
+class "MCPClientBase" as agentscope.mcp._client_base.MCPClientBase {
+  name : str
+  {abstract}get_callable_function(func_name: str, wrap_tool_result: bool) -> Callable
+}
+class "MCPToolFunction" as agentscope.mcp._mcp_function.MCPToolFunction {
+  client_gen : Callable[..., _AsyncGeneratorContextManager[Any]] | None
+  description : str
+  json_schema : dict[str, Any]
+  mcp_name : str
+  name : str
+  session : ClientSession | None
+  wrap_tool_result : bool
+}
+class "Mem0LongTermMemory" as agentscope.memory._mem0_long_term_memory.Mem0LongTermMemory {
+  agent_id : str | None
+  default_memory_type : str | None
+  long_term_working_memory : AsyncMemory
+  run_id : str | None
+  user_id : str | None
+  record(msgs: list[Msg | None], memory_type: str | None, infer: bool) -> None
+  record_to_memory(thinking: str, content: list[str]) -> ToolResponse
+  retrieve(msg: Msg | list[Msg] | None, limit: int) -> str
+  retrieve_from_memory(keywords: list[str], limit: int) -> ToolResponse
+}
+class "MemoryBase" as agentscope.memory._memory_base.MemoryBase {
+  {abstract}add() -> None
+  {abstract}clear() -> None
+  {abstract}delete() -> None
+  {abstract}get_memory() -> list[Msg]
+  {abstract}load_state_dict(state_dict: dict, strict: bool) -> None
+  {abstract}retrieve() -> None
+  {abstract}size() -> int
+  {abstract}state_dict() -> dict
+}
+class "MessageApi" as agentscope.evaluate._ace_benchmark._ace_tools_api._message_api.MessageApi {
+  inbox : dict[int, dict[str, str | int]]
+  max_capacity : int
+  message_id_counter : int
+  tool_functions : list[str]
+  user_list : dict[str, dict[str, str | int]]
+  delete_message(message_id: int) -> dict[str, bool | str]
+  get_all_message_times_with_ids() -> dict
+  get_earliest_message_id() -> dict
+  get_latest_message_id() -> dict
+  get_state_dict() -> dict
+  search_messages(user_name: str, keyword: str) -> dict
+  send_message(sender_name: str, receiver_name: str, message: str) -> dict[str, bool | str]
+  view_messages_between_users(sender_name: str, receiver_name: str) -> dict
+}
+class "MetricBase" as agentscope.evaluate._metric_base.MetricBase {
+  categories : list[str] | None
+  description : str | None
+  metric_type
+  name : str
+}
+class "MetricResult" as agentscope.evaluate._metric_base.MetricResult {
+  created_at : str
+  message : str | None
+  metadata : dict[str, JSONSerializableObject] | None
+  name : str
+  result : str | float | int
+}
+class "MetricType" as agentscope.evaluate._metric_base.MetricType {
+  name
+}
+class "MilvusLiteStore" as agentscope.rag._store._milvuslite_store.MilvusLiteStore {
+  collection_kwargs : dict
+  collection_name : str
+  dimensions : int
+  distance : Literal['COSINE', 'L2', 'IP']
+  add(documents: list[Document]) -> None
+  delete(ids: list[str] | None, filter: str | None) -> None
+  get_client() -> MilvusClient
+  search(query_embedding: Embedding, limit: int, score_threshold: float | None) -> list[Document]
+}
+class "Msg" as agentscope.message._message_base.Msg {
+  content : str | Sequence[Union[ToolUseBlock, ToolResultBlock, TextBlock, ThinkingBlock, ImageBlock, AudioBlock, VideoBlock]]
+  id : str
+  invocation_id : str | None
+  metadata : dict[str, JSONSerializableObject] | None
+  name : str
+  role : Literal['user', 'assistant', 'system']
+  timestamp
+  from_dict(json_data: dict) -> 'Msg'
+  get_content_blocks(block_type: Literal['text']) -> List[TextBlock]
+  get_text_content() -> str | None
+  has_content_blocks(block_type: Literal['text', 'tool_use', 'tool_result', 'image', 'audio', 'video'] | None) -> bool
+  to_dict() -> dict
+}
+class "MsgHub" as agentscope.pipeline._msghub.MsgHub {
+  announcement : list[Msg] | Msg | None
+  enable_auto_broadcast : bool
+  name : str
+  participants : list
+  add(new_participant: list[AgentBase] | AgentBase) -> None
+  broadcast(msg: list[Msg] | Msg) -> None
+  delete(participant: list[AgentBase] | AgentBase) -> None
+  set_auto_broadcast(enable: bool) -> None
+}
+class "OllamaChatFormatter" as agentscope.formatter._ollama_formatter.OllamaChatFormatter {
+  support_multiagent : bool
+  support_tools_api : bool
+  support_vision : bool
+  supported_blocks : list[type]
+}
+class "OllamaChatModel" as agentscope.model._ollama_model.OllamaChatModel {
+  client : AsyncClient
+  keep_alive : str
+  options : Optional[dict]
+  think : bool | None
+}
+class "OllamaMultiAgentFormatter" as agentscope.formatter._ollama_formatter.OllamaMultiAgentFormatter {
+  conversation_history_prompt : str
+  support_multiagent : bool
+  support_tools_api : bool
+  support_vision : bool
+  supported_blocks : list[type]
+}
+class "OllamaTextEmbedding" as agentscope.embedding._ollama_embedding.OllamaTextEmbedding {
+  client : AsyncClient
+  embedding_cache : EmbeddingCacheBase | None
+  supported_modalities : list[str]
+}
+class "OpenAIChatFormatter" as agentscope.formatter._openai_formatter.OpenAIChatFormatter {
+  support_multiagent : bool
+  support_tools_api : bool
+  support_vision : bool
+  supported_blocks : list[type]
+}
+class "OpenAIChatModel" as agentscope.model._openai_model.OpenAIChatModel {
+  client : AsyncOpenAI
+  generate_kwargs : dict
+  reasoning_effort : Literal['low', 'medium', 'high'] | None
+}
+class "OpenAIMultiAgentFormatter" as agentscope.formatter._openai_formatter.OpenAIMultiAgentFormatter {
+  conversation_history_prompt : str
+  support_multiagent : bool
+  support_tools_api : bool
+  support_vision : bool
+  supported_blocks : list[type]
+}
+class "OpenAITextEmbedding" as agentscope.embedding._openai_embedding.OpenAITextEmbedding {
+  client : AsyncOpenAI
+  embedding_cache : EmbeddingCacheBase | None
+  supported_modalities : list[str]
+}
+class "OpenAITokenCounter" as agentscope.token._openai_token_counter.OpenAITokenCounter {
+  model_name : str
+  count(messages: list[dict[str, Any]], tools: list[dict]) -> int
+}
+class "PDFReader" as agentscope.rag._reader._pdf_reader.PDFReader {
+  chunk_size : int
+  split_by : Literal['char', 'sentence', 'paragraph']
+  get_doc_id(pdf_path: str) -> str
+}
+class "Plan" as agentscope.plan._plan_model.Plan {
+  created_at : Optional[str]
+  description : Optional[str]
+  expected_outcome : Optional[str]
+  finished_at : str | None
+  id : Optional[str]
+  name : Optional[str]
+  outcome : str | None
+  state : Optional[Literal['todo', 'in_progress', 'done', 'abandoned']]
+  subtasks : Optional[list[SubTask]]
+  finish(state: Literal['done', 'abandoned'], outcome: str) -> None
+  refresh_plan_state() -> str
+  to_markdown(detailed: bool) -> str
+}
+class "PlanNotebook" as agentscope.plan._plan_notebook.PlanNotebook {
+  current_plan : NoneType, Plan | None
+  description : str
+  max_tasks : int | None
+  plan_to_hint
+  storage
+  create_plan(name: str, description: str, expected_outcome: str, subtasks: list[SubTask]) -> ToolResponse
+  finish_plan(state: Literal['done', 'abandoned'], outcome: str) -> ToolResponse
+  finish_subtask(subtask_idx: int, subtask_outcome: str) -> ToolResponse
+  get_current_hint() -> Msg | None
+  list_tools() -> list[Callable[..., Coroutine[Any, Any, ToolResponse]]]
+  recover_historical_plan(plan_id: str) -> ToolResponse
+  register_plan_change_hook(hook_name: str, hook: Callable[['PlanNotebook', Plan], None]) -> None
+  remove_plan_change_hook(hook_name: str) -> None
+  revise_current_plan(subtask_idx: int, action: Literal['add', 'revise', 'delete'], subtask: SubTask | None) -> ToolResponse
+  update_subtask_state(subtask_idx: int, state: Literal['todo', 'in_progress', 'abandoned']) -> ToolResponse
+  view_historical_plans() -> ToolResponse
+  view_subtasks(subtask_idx: list[int]) -> ToolResponse
+}
+class "PlanStorageBase" as agentscope.plan._storage_base.PlanStorageBase {
+  {abstract}add_plan(plan: Plan) -> None
+  {abstract}delete_plan(plan_id: str) -> None
+  {abstract}get_plan(plan_id: str) -> Plan | None
+  {abstract}get_plans() -> list[Plan]
+}
+class "QdrantStore" as agentscope.rag._store._qdrant_store.QdrantStore {
+  collection_kwargs : dict
+  collection_name : str
+  dimensions : int
+  distance : Literal['Cosine', 'Euclid', 'Dot', 'Manhattan']
+  add(documents: list[Document]) -> None
+  {abstract}delete() -> None
+  get_client() -> AsyncQdrantClient
+  search(query_embedding: Embedding, limit: int, score_threshold: float | None) -> list[Document]
+}
+class "RayEvaluationActor" as agentscope.evaluate._evaluator._ray_evaluator.RayEvaluationActor {
+  run(storage: EvaluatorStorageBase, task: Task, repeat_id: str, solution_output: SolutionOutput) -> None
+}
+class "RayEvaluator" as agentscope.evaluate._evaluator._ray_evaluator.RayEvaluator {
+  benchmark
+  n_repeat : int
+  n_workers : int
+  run(solution: Callable[[Task, Callable], Awaitable[SolutionOutput] | SolutionOutput]) -> None
+}
+class "RaySolutionActor" as agentscope.evaluate._evaluator._ray_evaluator.RaySolutionActor {
+  eval_actor
+  run(storage: EvaluatorStorageBase, repeat_id: str, task: Task, solution: Callable[[Task, Callable], Coroutine[Any, Any, SolutionOutput]]) -> None
+}
+class "ReActAgent" as agentscope.agent._react_agent.ReActAgent {
+  enable_rewrite_query : bool
+  finish_function_name : str
+  formatter
+  knowledge : list[KnowledgeBase]
+  long_term_memory : LongTermMemoryBase | None
+  max_iters : int
+  memory
+  model
+  name : str
+  parallel_tool_calls : bool
+  plan_notebook : NoneType
+  print_hint_msg : bool
+  sys_prompt : str
+  toolkit
+  generate_response() -> ToolResponse
+  handle_interrupt(_msg: Msg | list[Msg] | None) -> Msg
+  observe(msg: Msg | list[Msg] | None) -> None
+  reply(msg: Msg | list[Msg] | None, structured_model: Type[BaseModel] | None) -> Msg
+}
+class "ReActAgentBase" as agentscope.agent._react_agent_base.ReActAgentBase {
+  supported_hook_types : list[str]
+}
+class "ReMeLongTermMemoryBase" as agentscope.memory._reme._reme_long_term_memory_base.ReMeLongTermMemoryBase {
+  agent_name : str | None
+  app
+  run_name : str | None
+  workspace_id : str | None
+}
+class "ReMePersonalLongTermMemory" as agentscope.memory._reme._reme_personal_long_term_memory.ReMePersonalLongTermMemory {
+  record(msgs: list[Msg | None]) -> None
+  record_to_memory(thinking: str, content: list[str]) -> ToolResponse
+  retrieve(msg: Msg | list[Msg] | None) -> str
+  retrieve_from_memory(keywords: list[str]) -> ToolResponse
+}
+class "ReMeTaskLongTermMemory" as agentscope.memory._reme._reme_task_long_term_memory.ReMeTaskLongTermMemory {
+  record(msgs: list[Msg | None]) -> None
+  record_to_memory(thinking: str, content: list[str]) -> ToolResponse
+  retrieve(msg: Msg | list[Msg] | None) -> str
+  retrieve_from_memory(keywords: list[str]) -> ToolResponse
+}
+class "ReMeToolLongTermMemory" as agentscope.memory._reme._reme_tool_long_term_memory.ReMeToolLongTermMemory {
+  record(msgs: list[Msg | None]) -> None
+  record_to_memory(thinking: str, content: list[str]) -> ToolResponse
+  retrieve(msg: Msg | list[Msg] | None) -> str
+  retrieve_from_memory(keywords: list[str]) -> ToolResponse
+}
+class "ReaderBase" as agentscope.rag._reader._reader_base.ReaderBase {
+  {abstract}get_doc_id() -> str
+}
+class "RegisteredToolFunction" as agentscope.tool._registered_tool_function.RegisteredToolFunction {
+  extended_json_schema : dict
+  extended_model : Type[BaseModel] | None
+  group : str | Literal['basic']
+  json_schema : dict
+  mcp_name : str | None
+  name : str
+  original_func : Callable
+  postprocess_func : Callable[[ToolUseBlock, ToolResponse], ToolResponse | None] | Callable[[ToolUseBlock, ToolResponse], Awaitable[ToolResponse | None]] | None
+  preset_kwargs : dict[str, JSONSerializableObject]
+  source : Literal['function', 'mcp_server', 'function_group']
+}
+class "ReminderApi" as agentscope.evaluate._ace_benchmark._ace_tools_api._reminder_api.ReminderApi {
+  max_capacity : int
+  reminder_id_counter : int
+  reminder_list : dict[int, dict]
+  tool_functions : list[str]
+  add_reminder(title: str, description: str, time: datetime) -> dict[str, bool | str]
+  delete_reminder(reminder_id: int) -> dict[str, bool | str]
+  get_state_dict() -> dict
+  mark_as_notified(reminder_id: int) -> dict[str, bool | str]
+  search_reminders(keyword: str) -> dict
+  view_all_reminders() -> dict
+  view_reminder_by_title(title: str) -> dict[str, str | bool | dict[str, str | bool | datetime]]
+}
+class "SequentialPipeline" as agentscope.pipeline._class.SequentialPipeline {
+  agents : list[AgentBase]
+}
+class "SessionBase" as agentscope.session._session_base.SessionBase {
+  {abstract}load_session_state(session_id: str, allow_not_exist: bool) -> None
+  {abstract}save_session_state(session_id: str) -> None
+}
+class "SharedState" as agentscope.evaluate._ace_benchmark._ace_tools_api._shared_state.SharedState {
+  logged_in : bool
+  wifi : bool
+}
+class "SimpleKnowledge" as agentscope.rag._simple_knowledge.SimpleKnowledge {
+  add_documents(documents: list[Document]) -> None
+  retrieve(query: str, limit: int, score_threshold: float | None) -> list[Document]
+}
+class "SolutionOutput" as agentscope.evaluate._solution.SolutionOutput {
+  meta : dict[str, Any] | None
+  output : Union
+  success : bool
+  trajectory : list[ToolUseBlock | ToolResultBlock | TextBlock]
+}
+class "SpanAttributes" as agentscope.tracing._types.SpanAttributes {
+  INPUT : str
+  META : str
+  OUTPUT : str
+  PROJECT_RUN_ID : str
+  SPAN_KIND : str
+}
+class "SpanKind" as agentscope.tracing._types.SpanKind {
+  name
+}
+class "StateModule" as agentscope.module._state_module.StateModule {
+  load_state_dict(state_dict: dict, strict: bool) -> None
+  register_state(attr_name: str, custom_to_json: Callable[[Any], JSONSerializableObject] | None, custom_from_json: Callable[[JSONSerializableObject], Any] | None) -> None
+  state_dict() -> dict
+}
+class "StatefulClientBase" as agentscope.mcp._stateful_client_base.StatefulClientBase {
+  client : NoneType
+  is_connected : bool
+  session : ClientSession, NoneType
+  stack : AsyncExitStack, NoneType
+  close() -> None
+  connect() -> None
+  get_callable_function(func_name: str, wrap_tool_result: bool) -> MCPToolFunction
+  list_tools() -> List[mcp.types.Tool]
+}
+class "StdIOStatefulClient" as agentscope.mcp._stdio_stateful_client.StdIOStatefulClient {
+  client
+}
+class "StudioUserInput" as agentscope.agent._user_input.StudioUserInput {
+  input_events : dict
+  input_queues : dict
+  max_retries : int
+  run_id : str
+  sio : Client
+  studio_url : str
+}
+class "SubTask" as agentscope.plan._plan_model.SubTask {
+  created_at : Optional[str]
+  description : Optional[str]
+  expected_outcome : Optional[str]
+  finished_at : str | None
+  name : Optional[str]
+  outcome : str | None
+  state : Optional[Literal['todo', 'in_progress', 'done', 'abandoned']]
+  finish(outcome: str) -> None
+  to_markdown(detailed: bool) -> str
+  to_oneline_markdown() -> str
+}
+class "Task" as agentscope.evaluate._task.Task {
+  ground_truth : Union
+  id : str
+  input : Union
+  metadata : dict[str, Any] | None
+  metrics : list[MetricBase]
+  tags : dict[str, str] | None
+  evaluate(solution: SolutionOutput) -> list[MetricResult]
+}
+class "TerminalUserInput" as agentscope.agent._user_input.TerminalUserInput {
+  input_hint : str
+}
+class "TextBlock" as agentscope.message._message_block.TextBlock {
+  text : str
+  type : Required[Literal['text']]
+}
+class "TextReader" as agentscope.rag._reader._text_reader.TextReader {
+  chunk_size : int
+  split_by : Literal['char', 'sentence', 'paragraph']
+  get_doc_id(text: str) -> str
+}
+class "ThinkingBlock" as agentscope.message._message_block.ThinkingBlock {
+  thinking : str
+  type : Required[Literal['thinking']]
+}
+class "TokenCounterBase" as agentscope.token._token_base.TokenCounterBase {
+  {abstract}count(messages: list[dict]) -> int
+}
+class "ToolGroup" as agentscope.tool._toolkit.ToolGroup {
+  active : bool
+  description : str
+  name : str
+  notes : str | None
+}
+class "<color:red>ToolInterruptedError</color>" as agentscope.exception._tool.ToolInterruptedError {
+}
+class "<color:red>ToolInvalidArgumentsError</color>" as agentscope.exception._tool.ToolInvalidArgumentsError {
+}
+class "<color:red>ToolNotFoundError</color>" as agentscope.exception._tool.ToolNotFoundError {
+}
+class "ToolResponse" as agentscope.tool._response.ToolResponse {
+  content : List[TextBlock | ImageBlock | AudioBlock]
+  id : str
+  is_interrupted : bool
+  is_last : bool
+  metadata : Optional[dict]
+  stream : bool
+}
+class "ToolResultBlock" as agentscope.message._message_block.ToolResultBlock {
+  id : Required[str]
+  name : Required[str]
+  output : Required[str | List[TextBlock | ImageBlock | AudioBlock]]
+  type : Required[Literal['tool_result']]
+}
+class "ToolUseBlock" as agentscope.message._message_block.ToolUseBlock {
+  id : Required[str]
+  input : Required[dict[str, object]]
+  name : Required[str]
+  type : Required[Literal['tool_use']]
+}
+class "Toolkit" as agentscope.tool._toolkit.Toolkit {
+  groups : dict[str, ToolGroup]
+  tools : dict[str, RegisteredToolFunction]
+  call_tool_function(tool_call: ToolUseBlock) -> AsyncGenerator[ToolResponse, None]
+  clear() -> None
+  create_tool_group(group_name: str, description: str, active: bool, notes: str | None) -> None
+  get_activated_notes() -> str
+  get_json_schemas() -> list[dict]
+  load_state_dict(state_dict: dict[str, Any], strict: bool) -> None
+  register_mcp_client(mcp_client: MCPClientBase, group_name: str, enable_funcs: list[str] | None, disable_funcs: list[str] | None, preset_kwargs_mapping: dict[str, dict[str, Any]] | None, postprocess_func: Callable[[ToolUseBlock, ToolResponse], ToolResponse | None] | Callable[[ToolUseBlock, ToolResponse], Awaitable[ToolResponse | None]] | None) -> None
+  register_tool_function(tool_func: ToolFunction, group_name: str | Literal['basic'], preset_kwargs: dict[str, JSONSerializableObject] | None, func_description: str | None, json_schema: dict | None, include_long_description: bool, include_var_positional: bool, include_var_keyword: bool, postprocess_func: Callable[[ToolUseBlock, ToolResponse], ToolResponse | None] | Callable[[ToolUseBlock, ToolResponse], Awaitable[ToolResponse | None]] | None) -> None
+  remove_mcp_clients(client_names: list[str]) -> None
+  remove_tool_function(tool_name: str, allow_not_exist: bool) -> None
+  remove_tool_groups(group_names: str | list[str]) -> None
+  reset_equipped_tools() -> ToolResponse
+  set_extended_model(func_name: str, model: Type[BaseModel] | None) -> None
+  state_dict() -> dict[str, Any]
+  update_tool_groups(group_names: list[str], active: bool) -> None
+}
+class "TravelApi" as agentscope.evaluate._ace_benchmark._ace_tools_api._travel_api.TravelApi {
+  flights : list
+  reservations : list
+  tool_functions : list[str]
+  users : dict
+  authenticate_user(user_id: str, password: str) -> dict
+  calculate_baggage_fee(membership_level: str, cabin_class: str, baggage_count: int) -> float
+  calculate_price_difference(flight: dict, old_cabin: str, new_cabin: str) -> float
+  cancel_reservation(user_id: str, reservation_id: str, reason: str) -> str
+  find_transfer_flights(origin_city: str, transfer_city: str, destination_city: str) -> list[dict] | str
+  get_baggage_allowance(membership_level: str, cabin_class: str) -> int
+  get_flight_details(origin: str, destination: str) -> list[dict] | str
+  get_reservation_details(reservation_id: str, user_id: str) -> list[dict] | dict
+  get_state_dict() -> dict
+  get_user_details(user_id: str, password: str) -> dict
+  modify_flight(user_id: str, reservation_id: str, new_flight_no: str, new_cabin: str, add_baggage: int, new_payment_method: str) -> str
+  process_refund(user: dict, amount: float) -> str
+  reserve_flight(user_id: str, password: str, flight_no: str, cabin: str, payment_method: str, baggage_count: int) -> str
+  update_balance(user: dict, payment_method: str, amount: float) -> bool
+}
+class "TrinityChatModel" as agentscope.model._trinity_model.TrinityChatModel {
+  client : AsyncOpenAI, str
+}
+class "TruncatedFormatterBase" as agentscope.formatter._truncated_formatter_base.TruncatedFormatterBase {
+  max_tokens : int | None
+  token_counter : TokenCounterBase | None
+  format(msgs: list[Msg]) -> list[dict[str, Any]]
+}
+class "TuneConfig" as agentscope.tune._tune.tune.TuneConfig {
+  load_config(config_path: str) -> 'TuneConfig'
+  to_trinity_config(workflow_func: WorkflowType) -> Config
+}
+class "URLSource" as agentscope.message._message_block.URLSource {
+  type : Required[Literal['url']]
+  url : Required[str]
+}
+class "UserAgent" as agentscope.agent._user_agent.UserAgent {
+  name : str
+  {abstract}handle_interrupt() -> Msg
+  {abstract}observe(msg: Msg | list[Msg] | None) -> None
+  override_class_input_method(input_method: UserInputBase) -> None
+  override_instance_input_method(input_method: UserInputBase) -> None
+  reply(msg: Msg | list[Msg] | None, structured_model: Type[BaseModel] | None) -> Msg
+}
+class "UserInputBase" as agentscope.agent._user_input.UserInputBase {
+}
+class "UserInputData" as agentscope.agent._user_input.UserInputData {
+  blocks_input : Optional[List[TextBlock | ImageBlock | AudioBlock | VideoBlock]]
+  structured_input : dict[str, Any] | None
+}
+class "VDBStoreBase" as agentscope.rag._store._store_base.VDBStoreBase {
+  {abstract}add(documents: list[Document]) -> None
+  {abstract}delete() -> None
+  {abstract}get_client() -> Any
+  {abstract}search(query_embedding: Embedding, limit: int, score_threshold: float | None) -> list[Document]
+}
+class "VideoBlock" as agentscope.message._message_block.VideoBlock {
+  source : Required[Base64Source | URLSource]
+  type : Required[Literal['video']]
+}
+class "WordReader" as agentscope.rag._reader._word_reader.WordReader {
+  chunk_size : int
+  include_image : bool
+  separate_table : bool
+  split_by : Literal['char', 'sentence', 'paragraph']
+  table_format : Literal['markdown', 'json']
+  get_doc_id(word_path: str) -> str
+}
+class "_ASEmbedderConfig" as agentscope.memory._mem0_long_term_memory._create_agentscope_config_classes._ASEmbedderConfig {
+  validate_config(v: Any, values: Any) -> Any
+}
+class "_ASLlmConfig" as agentscope.memory._mem0_long_term_memory._create_agentscope_config_classes._ASLlmConfig {
+  validate_config(v: Any, values: Any) -> Any
+}
+class "_AgentMeta" as agentscope.agent._agent_meta._AgentMeta {
+}
+class "_JSONSerializeFunction" as agentscope.module._state_module._JSONSerializeFunction {
+  load_json : Optional[Callable[[Any], Any]]
+  to_json : Optional[Callable[[Any], Any]]
+}
+class "_QueryRewriteModel" as agentscope.agent._react_agent._QueryRewriteModel {
+  rewritten_query : Optional[str]
+}
+class "_ReActAgentMeta" as agentscope.agent._agent_meta._ReActAgentMeta {
+}
+agentscope.agent._agent_base.AgentBase --|> agentscope.module._state_module.StateModule
+agentscope.agent._agent_meta._ReActAgentMeta --|> agentscope.agent._agent_meta._AgentMeta
+agentscope.agent._react_agent.ReActAgent --|> agentscope.agent._react_agent_base.ReActAgentBase
+agentscope.agent._react_agent_base.ReActAgentBase --|> agentscope.agent._agent_base.AgentBase
+agentscope.agent._user_agent.UserAgent --|> agentscope.agent._agent_base.AgentBase
+agentscope.agent._user_input.StudioUserInput --|> agentscope.agent._user_input.UserInputBase
+agentscope.agent._user_input.TerminalUserInput --|> agentscope.agent._user_input.UserInputBase
+agentscope.embedding._dashscope_embedding.DashScopeTextEmbedding --|> agentscope.embedding._embedding_base.EmbeddingModelBase
+agentscope.embedding._dashscope_multimodal_embedding.DashScopeMultiModalEmbedding --|> agentscope.embedding._embedding_base.EmbeddingModelBase
+agentscope.embedding._embedding_response.EmbeddingResponse --|> agentscope._utils._mixin.DictMixin
+agentscope.embedding._embedding_usage.EmbeddingUsage --|> agentscope._utils._mixin.DictMixin
+agentscope.embedding._file_cache.FileEmbeddingCache --|> agentscope.embedding._cache_base.EmbeddingCacheBase
+agentscope.embedding._gemini_embedding.GeminiTextEmbedding --|> agentscope.embedding._embedding_base.EmbeddingModelBase
+agentscope.embedding._ollama_embedding.OllamaTextEmbedding --|> agentscope.embedding._embedding_base.EmbeddingModelBase
+agentscope.embedding._openai_embedding.OpenAITextEmbedding --|> agentscope.embedding._embedding_base.EmbeddingModelBase
+agentscope.evaluate._ace_benchmark._ace_benchmark.ACEBenchmark --|> agentscope.evaluate._benchmark_base.BenchmarkBase
+agentscope.evaluate._ace_benchmark._ace_metric.ACEAccuracy --|> agentscope.evaluate._metric_base.MetricBase
+agentscope.evaluate._ace_benchmark._ace_metric.ACEProcessAccuracy --|> agentscope.evaluate._metric_base.MetricBase
+agentscope.evaluate._ace_benchmark._ace_tools_api._food_platform_api.FoodPlatformApi --|> agentscope.evaluate._ace_benchmark._ace_tools_api._shared_state.SharedState
+agentscope.evaluate._ace_benchmark._ace_tools_api._message_api.MessageApi --|> agentscope.evaluate._ace_benchmark._ace_tools_api._shared_state.SharedState
+agentscope.evaluate._ace_benchmark._ace_tools_api._reminder_api.ReminderApi --|> agentscope.evaluate._ace_benchmark._ace_tools_api._shared_state.SharedState
+agentscope.evaluate._evaluator._general_evaluator.GeneralEvaluator --|> agentscope.evaluate._evaluator._evaluator_base.EvaluatorBase
+agentscope.evaluate._evaluator._ray_evaluator.RayEvaluator --|> agentscope.evaluate._evaluator._evaluator_base.EvaluatorBase
+agentscope.evaluate._evaluator_storage._file_evaluator_storage.FileEvaluatorStorage --|> agentscope.evaluate._evaluator_storage._evaluator_storage_base.EvaluatorStorageBase
+agentscope.evaluate._metric_base.MetricResult --|> agentscope._utils._mixin.DictMixin
+agentscope.evaluate._solution.SolutionOutput --|> agentscope._utils._mixin.DictMixin
+agentscope.exception._tool.ToolInterruptedError --|> agentscope.exception._exception_base.AgentOrientedExceptionBase
+agentscope.exception._tool.ToolInvalidArgumentsError --|> agentscope.exception._exception_base.AgentOrientedExceptionBase
+agentscope.exception._tool.ToolNotFoundError --|> agentscope.exception._exception_base.AgentOrientedExceptionBase
+agentscope.formatter._anthropic_formatter.AnthropicChatFormatter --|> agentscope.formatter._truncated_formatter_base.TruncatedFormatterBase
+agentscope.formatter._anthropic_formatter.AnthropicMultiAgentFormatter --|> agentscope.formatter._truncated_formatter_base.TruncatedFormatterBase
+agentscope.formatter._dashscope_formatter.DashScopeChatFormatter --|> agentscope.formatter._truncated_formatter_base.TruncatedFormatterBase
+agentscope.formatter._dashscope_formatter.DashScopeMultiAgentFormatter --|> agentscope.formatter._truncated_formatter_base.TruncatedFormatterBase
+agentscope.formatter._deepseek_formatter.DeepSeekChatFormatter --|> agentscope.formatter._truncated_formatter_base.TruncatedFormatterBase
+agentscope.formatter._deepseek_formatter.DeepSeekMultiAgentFormatter --|> agentscope.formatter._truncated_formatter_base.TruncatedFormatterBase
+agentscope.formatter._gemini_formatter.GeminiChatFormatter --|> agentscope.formatter._truncated_formatter_base.TruncatedFormatterBase
+agentscope.formatter._gemini_formatter.GeminiMultiAgentFormatter --|> agentscope.formatter._truncated_formatter_base.TruncatedFormatterBase
+agentscope.formatter._ollama_formatter.OllamaChatFormatter --|> agentscope.formatter._truncated_formatter_base.TruncatedFormatterBase
+agentscope.formatter._ollama_formatter.OllamaMultiAgentFormatter --|> agentscope.formatter._truncated_formatter_base.TruncatedFormatterBase
+agentscope.formatter._openai_formatter.OpenAIChatFormatter --|> agentscope.formatter._truncated_formatter_base.TruncatedFormatterBase
+agentscope.formatter._openai_formatter.OpenAIMultiAgentFormatter --|> agentscope.formatter._truncated_formatter_base.TruncatedFormatterBase
+agentscope.formatter._truncated_formatter_base.TruncatedFormatterBase --|> agentscope.formatter._formatter_base.FormatterBase
+agentscope.mcp._http_stateful_client.HttpStatefulClient --|> agentscope.mcp._stateful_client_base.StatefulClientBase
+agentscope.mcp._http_stateless_client.HttpStatelessClient --|> agentscope.mcp._client_base.MCPClientBase
+agentscope.mcp._stateful_client_base.StatefulClientBase --|> agentscope.mcp._client_base.MCPClientBase
+agentscope.mcp._stdio_stateful_client.StdIOStatefulClient --|> agentscope.mcp._stateful_client_base.StatefulClientBase
+agentscope.memory._in_memory_memory.InMemoryMemory --|> agentscope.memory._memory_base.MemoryBase
+agentscope.memory._long_term_memory_base.LongTermMemoryBase --|> agentscope.module._state_module.StateModule
+agentscope.memory._mem0_long_term_memory.Mem0LongTermMemory --|> agentscope.memory._long_term_memory_base.LongTermMemoryBase
+agentscope.memory._memory_base.MemoryBase --|> agentscope.module._state_module.StateModule
+agentscope.memory._reme._reme_long_term_memory_base.ReMeLongTermMemoryBase --|> agentscope.memory._long_term_memory_base.LongTermMemoryBase
+agentscope.memory._reme._reme_personal_long_term_memory.ReMePersonalLongTermMemory --|> agentscope.memory._reme._reme_long_term_memory_base.ReMeLongTermMemoryBase
+agentscope.memory._reme._reme_task_long_term_memory.ReMeTaskLongTermMemory --|> agentscope.memory._reme._reme_long_term_memory_base.ReMeLongTermMemoryBase
+agentscope.memory._reme._reme_tool_long_term_memory.ReMeToolLongTermMemory --|> agentscope.memory._reme._reme_long_term_memory_base.ReMeLongTermMemoryBase
+agentscope.model._anthropic_model.AnthropicChatModel --|> agentscope.model._model_base.ChatModelBase
+agentscope.model._dashscope_model.DashScopeChatModel --|> agentscope.model._model_base.ChatModelBase
+agentscope.model._gemini_model.GeminiChatModel --|> agentscope.model._model_base.ChatModelBase
+agentscope.model._model_response.ChatResponse --|> agentscope._utils._mixin.DictMixin
+agentscope.model._model_usage.ChatUsage --|> agentscope._utils._mixin.DictMixin
+agentscope.model._ollama_model.OllamaChatModel --|> agentscope.model._model_base.ChatModelBase
+agentscope.model._openai_model.OpenAIChatModel --|> agentscope.model._model_base.ChatModelBase
+agentscope.model._trinity_model.TrinityChatModel --|> agentscope.model._openai_model.OpenAIChatModel
+agentscope.plan._in_memory_storage.InMemoryPlanStorage --|> agentscope.plan._storage_base.PlanStorageBase
+agentscope.plan._plan_notebook.PlanNotebook --|> agentscope.module._state_module.StateModule
+agentscope.plan._storage_base.PlanStorageBase --|> agentscope.module._state_module.StateModule
+agentscope.rag._reader._image_reader.ImageReader --|> agentscope.rag._reader._reader_base.ReaderBase
+agentscope.rag._reader._pdf_reader.PDFReader --|> agentscope.rag._reader._reader_base.ReaderBase
+agentscope.rag._reader._text_reader.TextReader --|> agentscope.rag._reader._reader_base.ReaderBase
+agentscope.rag._reader._word_reader.WordReader --|> agentscope.rag._reader._reader_base.ReaderBase
+agentscope.rag._simple_knowledge.SimpleKnowledge --|> agentscope.rag._knowledge_base.KnowledgeBase
+agentscope.rag._store._milvuslite_store.MilvusLiteStore --|> agentscope.rag._store._store_base.VDBStoreBase
+agentscope.rag._store._qdrant_store.QdrantStore --|> agentscope.rag._store._store_base.VDBStoreBase
+agentscope.session._json_session.JSONSession --|> agentscope.session._session_base.SessionBase
+agentscope.token._gemini_token_counter.GeminiTokenCounter --|> agentscope.token._token_base.TokenCounterBase
+agentscope.token._huggingface_token_counter.HuggingFaceTokenCounter --|> agentscope.token._token_base.TokenCounterBase
+agentscope.token._openai_token_counter.OpenAITokenCounter --|> agentscope.token._token_base.TokenCounterBase
+agentscope.tool._toolkit.Toolkit --|> agentscope.module._state_module.StateModule
+agentscope.agent._react_agent.ReActAgent --> agentscope.memory._in_memory_memory.InMemoryMemory : memory
+agentscope.memory._in_memory_memory.InMemoryMemory --> agentscope.message._message_base.Msg : content
+agentscope.plan._plan_notebook.PlanNotebook --> agentscope.plan._in_memory_storage.InMemoryPlanStorage : storage
+agentscope.plan._plan_notebook.PlanNotebook --> agentscope.plan._plan_notebook.DefaultPlanToHint : plan_to_hint
+agentscope.rag._document.Document --> agentscope.rag._document.DocMetadata : metadata
+agentscope.agent._react_agent.ReActAgent --> agentscope.rag._knowledge_base.KnowledgeBase : knowledge
+agentscope.tool._toolkit.Toolkit --> agentscope.tool._registered_tool_function.RegisteredToolFunction : tools
+agentscope.tool._toolkit.Toolkit --> agentscope.tool._toolkit.ToolGroup : groups
+agentscope.agent._react_agent.ReActAgent --> agentscope.tool._toolkit.Toolkit : toolkit
+agentscope.agent._agent_base.AgentBase --o agentscope.pipeline._class.FanoutPipeline : agents
+agentscope.agent._agent_base.AgentBase --o agentscope.pipeline._class.SequentialPipeline : agents
+agentscope.embedding._embedding_base.EmbeddingModelBase --o agentscope.rag._knowledge_base.KnowledgeBase : embedding_model
+agentscope.evaluate._benchmark_base.BenchmarkBase --o agentscope.evaluate._evaluator._evaluator_base.EvaluatorBase : benchmark
+agentscope.evaluate._benchmark_base.BenchmarkBase --o agentscope.evaluate._evaluator._general_evaluator.GeneralEvaluator : benchmark
+agentscope.evaluate._benchmark_base.BenchmarkBase --o agentscope.evaluate._evaluator._ray_evaluator.RayEvaluator : benchmark
+agentscope.evaluate._evaluator_storage._evaluator_storage_base.EvaluatorStorageBase --o agentscope.evaluate._evaluator._evaluator_base.EvaluatorBase : storage
+agentscope.evaluate._metric_base.MetricType --o agentscope.evaluate._metric_base.MetricBase : metric_type
+agentscope.formatter._formatter_base.FormatterBase --o agentscope.agent._react_agent.ReActAgent : formatter
+agentscope.model._model_base.ChatModelBase --o agentscope.agent._react_agent.ReActAgent : model
+agentscope.plan._plan_model.Plan --o agentscope.plan._plan_notebook.PlanNotebook : current_plan
+agentscope.rag._store._store_base.VDBStoreBase --o agentscope.rag._knowledge_base.KnowledgeBase : embedding_store
+@enduml

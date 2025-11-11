@@ -1,0 +1,544 @@
+@startuml packages_agentscope
+set namespaceSeparator none
+package "agentscope" as agentscope {
+}
+package "agentscope._config" as agentscope._config {
+}
+package "agentscope._logging" as agentscope._logging {
+}
+package "agentscope._utils" as agentscope._utils {
+}
+package "agentscope._utils._common" as agentscope._utils._common {
+}
+package "agentscope._utils._mixin" as agentscope._utils._mixin {
+}
+package "agentscope._version" as agentscope._version {
+}
+package "agentscope.agent" as agentscope.agent {
+}
+package "agentscope.agent._agent_base" as agentscope.agent._agent_base {
+}
+package "agentscope.agent._agent_meta" as agentscope.agent._agent_meta {
+}
+package "agentscope.agent._react_agent" as agentscope.agent._react_agent {
+}
+package "agentscope.agent._react_agent_base" as agentscope.agent._react_agent_base {
+}
+package "agentscope.agent._user_agent" as agentscope.agent._user_agent {
+}
+package "agentscope.agent._user_input" as agentscope.agent._user_input {
+}
+package "agentscope.embedding" as agentscope.embedding {
+}
+package "agentscope.embedding._cache_base" as agentscope.embedding._cache_base {
+}
+package "agentscope.embedding._dashscope_embedding" as agentscope.embedding._dashscope_embedding {
+}
+package "agentscope.embedding._dashscope_multimodal_embedding" as agentscope.embedding._dashscope_multimodal_embedding {
+}
+package "agentscope.embedding._embedding_base" as agentscope.embedding._embedding_base {
+}
+package "agentscope.embedding._embedding_response" as agentscope.embedding._embedding_response {
+}
+package "agentscope.embedding._embedding_usage" as agentscope.embedding._embedding_usage {
+}
+package "agentscope.embedding._file_cache" as agentscope.embedding._file_cache {
+}
+package "agentscope.embedding._gemini_embedding" as agentscope.embedding._gemini_embedding {
+}
+package "agentscope.embedding._ollama_embedding" as agentscope.embedding._ollama_embedding {
+}
+package "agentscope.embedding._openai_embedding" as agentscope.embedding._openai_embedding {
+}
+package "agentscope.evaluate" as agentscope.evaluate {
+}
+package "agentscope.evaluate._ace_benchmark" as agentscope.evaluate._ace_benchmark {
+}
+package "agentscope.evaluate._ace_benchmark._ace_benchmark" as agentscope.evaluate._ace_benchmark._ace_benchmark {
+}
+package "agentscope.evaluate._ace_benchmark._ace_metric" as agentscope.evaluate._ace_benchmark._ace_metric {
+}
+package "agentscope.evaluate._ace_benchmark._ace_tools_api" as agentscope.evaluate._ace_benchmark._ace_tools_api {
+}
+package "agentscope.evaluate._ace_benchmark._ace_tools_api._food_platform_api" as agentscope.evaluate._ace_benchmark._ace_tools_api._food_platform_api {
+}
+package "agentscope.evaluate._ace_benchmark._ace_tools_api._message_api" as agentscope.evaluate._ace_benchmark._ace_tools_api._message_api {
+}
+package "agentscope.evaluate._ace_benchmark._ace_tools_api._reminder_api" as agentscope.evaluate._ace_benchmark._ace_tools_api._reminder_api {
+}
+package "agentscope.evaluate._ace_benchmark._ace_tools_api._shared_state" as agentscope.evaluate._ace_benchmark._ace_tools_api._shared_state {
+}
+package "agentscope.evaluate._ace_benchmark._ace_tools_api._travel_api" as agentscope.evaluate._ace_benchmark._ace_tools_api._travel_api {
+}
+package "agentscope.evaluate._ace_benchmark._ace_tools_zh" as agentscope.evaluate._ace_benchmark._ace_tools_zh {
+}
+package "agentscope.evaluate._benchmark_base" as agentscope.evaluate._benchmark_base {
+}
+package "agentscope.evaluate._evaluator" as agentscope.evaluate._evaluator {
+}
+package "agentscope.evaluate._evaluator._evaluator_base" as agentscope.evaluate._evaluator._evaluator_base {
+}
+package "agentscope.evaluate._evaluator._general_evaluator" as agentscope.evaluate._evaluator._general_evaluator {
+}
+package "agentscope.evaluate._evaluator._ray_evaluator" as agentscope.evaluate._evaluator._ray_evaluator {
+}
+package "agentscope.evaluate._evaluator_storage" as agentscope.evaluate._evaluator_storage {
+}
+package "agentscope.evaluate._evaluator_storage._evaluator_storage_base" as agentscope.evaluate._evaluator_storage._evaluator_storage_base {
+}
+package "agentscope.evaluate._evaluator_storage._file_evaluator_storage" as agentscope.evaluate._evaluator_storage._file_evaluator_storage {
+}
+package "agentscope.evaluate._metric_base" as agentscope.evaluate._metric_base {
+}
+package "agentscope.evaluate._solution" as agentscope.evaluate._solution {
+}
+package "agentscope.evaluate._task" as agentscope.evaluate._task {
+}
+package "agentscope.exception" as agentscope.exception {
+}
+package "agentscope.exception._exception_base" as agentscope.exception._exception_base {
+}
+package "agentscope.exception._tool" as agentscope.exception._tool {
+}
+package "agentscope.formatter" as agentscope.formatter {
+}
+package "agentscope.formatter._anthropic_formatter" as agentscope.formatter._anthropic_formatter {
+}
+package "agentscope.formatter._dashscope_formatter" as agentscope.formatter._dashscope_formatter {
+}
+package "agentscope.formatter._deepseek_formatter" as agentscope.formatter._deepseek_formatter {
+}
+package "agentscope.formatter._formatter_base" as agentscope.formatter._formatter_base {
+}
+package "agentscope.formatter._gemini_formatter" as agentscope.formatter._gemini_formatter {
+}
+package "agentscope.formatter._ollama_formatter" as agentscope.formatter._ollama_formatter {
+}
+package "agentscope.formatter._openai_formatter" as agentscope.formatter._openai_formatter {
+}
+package "agentscope.formatter._truncated_formatter_base" as agentscope.formatter._truncated_formatter_base {
+}
+package "agentscope.hooks" as agentscope.hooks {
+}
+package "agentscope.hooks._studio_hooks" as agentscope.hooks._studio_hooks {
+}
+package "agentscope.mcp" as agentscope.mcp {
+}
+package "agentscope.mcp._client_base" as agentscope.mcp._client_base {
+}
+package "agentscope.mcp._http_stateful_client" as agentscope.mcp._http_stateful_client {
+}
+package "agentscope.mcp._http_stateless_client" as agentscope.mcp._http_stateless_client {
+}
+package "agentscope.mcp._mcp_function" as agentscope.mcp._mcp_function {
+}
+package "agentscope.mcp._stateful_client_base" as agentscope.mcp._stateful_client_base {
+}
+package "agentscope.mcp._stdio_stateful_client" as agentscope.mcp._stdio_stateful_client {
+}
+package "agentscope.memory" as agentscope.memory {
+}
+package "agentscope.memory._in_memory_memory" as agentscope.memory._in_memory_memory {
+}
+package "agentscope.memory._long_term_memory_base" as agentscope.memory._long_term_memory_base {
+}
+package "agentscope.memory._mem0_long_term_memory" as agentscope.memory._mem0_long_term_memory {
+}
+package "agentscope.memory._mem0_utils" as agentscope.memory._mem0_utils {
+}
+package "agentscope.memory._memory_base" as agentscope.memory._memory_base {
+}
+package "agentscope.memory._reme" as agentscope.memory._reme {
+}
+package "agentscope.memory._reme._reme_long_term_memory_base" as agentscope.memory._reme._reme_long_term_memory_base {
+}
+package "agentscope.memory._reme._reme_personal_long_term_memory" as agentscope.memory._reme._reme_personal_long_term_memory {
+}
+package "agentscope.memory._reme._reme_task_long_term_memory" as agentscope.memory._reme._reme_task_long_term_memory {
+}
+package "agentscope.memory._reme._reme_tool_long_term_memory" as agentscope.memory._reme._reme_tool_long_term_memory {
+}
+package "agentscope.message" as agentscope.message {
+}
+package "agentscope.message._message_base" as agentscope.message._message_base {
+}
+package "agentscope.message._message_block" as agentscope.message._message_block {
+}
+package "agentscope.model" as agentscope.model {
+}
+package "agentscope.model._anthropic_model" as agentscope.model._anthropic_model {
+}
+package "agentscope.model._dashscope_model" as agentscope.model._dashscope_model {
+}
+package "agentscope.model._gemini_model" as agentscope.model._gemini_model {
+}
+package "agentscope.model._model_base" as agentscope.model._model_base {
+}
+package "agentscope.model._model_response" as agentscope.model._model_response {
+}
+package "agentscope.model._model_usage" as agentscope.model._model_usage {
+}
+package "agentscope.model._ollama_model" as agentscope.model._ollama_model {
+}
+package "agentscope.model._openai_model" as agentscope.model._openai_model {
+}
+package "agentscope.model._trinity_model" as agentscope.model._trinity_model {
+}
+package "agentscope.module" as agentscope.module {
+}
+package "agentscope.module._state_module" as agentscope.module._state_module {
+}
+package "agentscope.pipeline" as agentscope.pipeline {
+}
+package "agentscope.pipeline._class" as agentscope.pipeline._class {
+}
+package "agentscope.pipeline._functional" as agentscope.pipeline._functional {
+}
+package "agentscope.pipeline._msghub" as agentscope.pipeline._msghub {
+}
+package "agentscope.plan" as agentscope.plan {
+}
+package "agentscope.plan._in_memory_storage" as agentscope.plan._in_memory_storage {
+}
+package "agentscope.plan._plan_model" as agentscope.plan._plan_model {
+}
+package "agentscope.plan._plan_notebook" as agentscope.plan._plan_notebook {
+}
+package "agentscope.plan._storage_base" as agentscope.plan._storage_base {
+}
+package "agentscope.rag" as agentscope.rag {
+}
+package "agentscope.rag._document" as agentscope.rag._document {
+}
+package "agentscope.rag._knowledge_base" as agentscope.rag._knowledge_base {
+}
+package "agentscope.rag._reader" as agentscope.rag._reader {
+}
+package "agentscope.rag._reader._image_reader" as agentscope.rag._reader._image_reader {
+}
+package "agentscope.rag._reader._pdf_reader" as agentscope.rag._reader._pdf_reader {
+}
+package "agentscope.rag._reader._reader_base" as agentscope.rag._reader._reader_base {
+}
+package "agentscope.rag._reader._text_reader" as agentscope.rag._reader._text_reader {
+}
+package "agentscope.rag._reader._word_reader" as agentscope.rag._reader._word_reader {
+}
+package "agentscope.rag._simple_knowledge" as agentscope.rag._simple_knowledge {
+}
+package "agentscope.rag._store" as agentscope.rag._store {
+}
+package "agentscope.rag._store._milvuslite_store" as agentscope.rag._store._milvuslite_store {
+}
+package "agentscope.rag._store._qdrant_store" as agentscope.rag._store._qdrant_store {
+}
+package "agentscope.rag._store._store_base" as agentscope.rag._store._store_base {
+}
+package "agentscope.session" as agentscope.session {
+}
+package "agentscope.session._json_session" as agentscope.session._json_session {
+}
+package "agentscope.session._session_base" as agentscope.session._session_base {
+}
+package "agentscope.token" as agentscope.token {
+}
+package "agentscope.token._anthropic_token_counter" as agentscope.token._anthropic_token_counter {
+}
+package "agentscope.token._gemini_token_counter" as agentscope.token._gemini_token_counter {
+}
+package "agentscope.token._huggingface_token_counter" as agentscope.token._huggingface_token_counter {
+}
+package "agentscope.token._openai_token_counter" as agentscope.token._openai_token_counter {
+}
+package "agentscope.token._token_base" as agentscope.token._token_base {
+}
+package "agentscope.tool" as agentscope.tool {
+}
+package "agentscope.tool._async_wrapper" as agentscope.tool._async_wrapper {
+}
+package "agentscope.tool._coding" as agentscope.tool._coding {
+}
+package "agentscope.tool._coding._python" as agentscope.tool._coding._python {
+}
+package "agentscope.tool._coding._shell" as agentscope.tool._coding._shell {
+}
+package "agentscope.tool._multi_modality" as agentscope.tool._multi_modality {
+}
+package "agentscope.tool._multi_modality._dashscope_tools" as agentscope.tool._multi_modality._dashscope_tools {
+}
+package "agentscope.tool._multi_modality._openai_tools" as agentscope.tool._multi_modality._openai_tools {
+}
+package "agentscope.tool._registered_tool_function" as agentscope.tool._registered_tool_function {
+}
+package "agentscope.tool._response" as agentscope.tool._response {
+}
+package "agentscope.tool._text_file" as agentscope.tool._text_file {
+}
+package "agentscope.tool._text_file._utils" as agentscope.tool._text_file._utils {
+}
+package "agentscope.tool._text_file._view_text_file" as agentscope.tool._text_file._view_text_file {
+}
+package "agentscope.tool._text_file._write_text_file" as agentscope.tool._text_file._write_text_file {
+}
+package "agentscope.tool._toolkit" as agentscope.tool._toolkit {
+}
+package "agentscope.tracing" as agentscope.tracing {
+}
+package "agentscope.tracing._attributes" as agentscope.tracing._attributes {
+}
+package "agentscope.tracing._setup" as agentscope.tracing._setup {
+}
+package "agentscope.tracing._trace" as agentscope.tracing._trace {
+}
+package "agentscope.tracing._types" as agentscope.tracing._types {
+}
+package "agentscope.tune" as agentscope.tune {
+}
+package "agentscope.tune._tune" as agentscope.tune._tune {
+}
+package "agentscope.tune._workflow" as agentscope.tune._workflow {
+}
+package "agentscope.types" as agentscope.types {
+}
+package "agentscope.types._hook" as agentscope.types._hook {
+}
+package "agentscope.types._json" as agentscope.types._json {
+}
+package "agentscope.types._object" as agentscope.types._object {
+}
+package "agentscope.types._tool" as agentscope.types._tool {
+}
+agentscope --> agentscope._logging
+agentscope --> agentscope._version
+agentscope --> agentscope.agent
+agentscope --> agentscope.hooks
+agentscope --> agentscope.tracing
+agentscope.agent --> agentscope.agent._agent_base
+agentscope.agent --> agentscope.agent._react_agent
+agentscope.agent --> agentscope.agent._react_agent_base
+agentscope.agent --> agentscope.agent._user_agent
+agentscope.agent --> agentscope.agent._user_input
+agentscope.agent._agent_base --> agentscope.agent._agent_meta
+agentscope.agent._react_agent --> agentscope.agent._react_agent_base
+agentscope.agent._react_agent_base --> agentscope.agent._agent_base
+agentscope.agent._react_agent_base --> agentscope.agent._agent_meta
+agentscope.agent._user_agent --> agentscope.agent._agent_base
+agentscope.agent._user_agent --> agentscope.agent._user_input
+agentscope.embedding --> agentscope.embedding._cache_base
+agentscope.embedding --> agentscope.embedding._dashscope_embedding
+agentscope.embedding --> agentscope.embedding._dashscope_multimodal_embedding
+agentscope.embedding --> agentscope.embedding._embedding_base
+agentscope.embedding --> agentscope.embedding._embedding_response
+agentscope.embedding --> agentscope.embedding._embedding_usage
+agentscope.embedding --> agentscope.embedding._file_cache
+agentscope.embedding --> agentscope.embedding._gemini_embedding
+agentscope.embedding --> agentscope.embedding._ollama_embedding
+agentscope.embedding --> agentscope.embedding._openai_embedding
+agentscope.embedding._dashscope_embedding --> agentscope.embedding._cache_base
+agentscope.embedding._dashscope_embedding --> agentscope.embedding._embedding_base
+agentscope.embedding._dashscope_embedding --> agentscope.embedding._embedding_response
+agentscope.embedding._dashscope_embedding --> agentscope.embedding._embedding_usage
+agentscope.embedding._dashscope_multimodal_embedding --> agentscope.embedding._cache_base
+agentscope.embedding._dashscope_multimodal_embedding --> agentscope.embedding._embedding_base
+agentscope.embedding._dashscope_multimodal_embedding --> agentscope.embedding._embedding_response
+agentscope.embedding._dashscope_multimodal_embedding --> agentscope.embedding._embedding_usage
+agentscope.embedding._embedding_base --> agentscope.embedding._embedding_response
+agentscope.embedding._embedding_response --> agentscope.embedding._embedding_usage
+agentscope.embedding._file_cache --> agentscope.embedding._cache_base
+agentscope.embedding._gemini_embedding --> agentscope.embedding._cache_base
+agentscope.embedding._gemini_embedding --> agentscope.embedding._embedding_base
+agentscope.embedding._gemini_embedding --> agentscope.embedding._embedding_response
+agentscope.embedding._gemini_embedding --> agentscope.embedding._embedding_usage
+agentscope.embedding._ollama_embedding --> agentscope.embedding._cache_base
+agentscope.embedding._ollama_embedding --> agentscope.embedding._embedding_response
+agentscope.embedding._ollama_embedding --> agentscope.embedding._embedding_usage
+agentscope.embedding._openai_embedding --> agentscope.embedding._cache_base
+agentscope.embedding._openai_embedding --> agentscope.embedding._embedding_base
+agentscope.embedding._openai_embedding --> agentscope.embedding._embedding_response
+agentscope.embedding._openai_embedding --> agentscope.embedding._embedding_usage
+agentscope.evaluate --> agentscope.evaluate._ace_benchmark
+agentscope.evaluate --> agentscope.evaluate._benchmark_base
+agentscope.evaluate --> agentscope.evaluate._evaluator
+agentscope.evaluate --> agentscope.evaluate._evaluator_storage
+agentscope.evaluate --> agentscope.evaluate._metric_base
+agentscope.evaluate --> agentscope.evaluate._solution
+agentscope.evaluate --> agentscope.evaluate._task
+agentscope.evaluate._ace_benchmark --> agentscope.evaluate._ace_benchmark
+agentscope.evaluate._ace_benchmark --> agentscope.evaluate._ace_benchmark._ace_metric
+agentscope.evaluate._ace_benchmark --> agentscope.evaluate._ace_benchmark._ace_tools_zh
+agentscope.evaluate._ace_benchmark._ace_benchmark --> agentscope.evaluate._ace_benchmark._ace_metric
+agentscope.evaluate._ace_benchmark._ace_benchmark --> agentscope.evaluate._ace_benchmark._ace_tools_zh
+agentscope.evaluate._ace_benchmark._ace_tools_api --> agentscope.evaluate._ace_benchmark._ace_tools_api._food_platform_api
+agentscope.evaluate._ace_benchmark._ace_tools_api --> agentscope.evaluate._ace_benchmark._ace_tools_api._message_api
+agentscope.evaluate._ace_benchmark._ace_tools_api --> agentscope.evaluate._ace_benchmark._ace_tools_api._reminder_api
+agentscope.evaluate._ace_benchmark._ace_tools_api --> agentscope.evaluate._ace_benchmark._ace_tools_api._travel_api
+agentscope.evaluate._ace_benchmark._ace_tools_api._food_platform_api --> agentscope.evaluate._ace_benchmark._ace_tools_api._shared_state
+agentscope.evaluate._ace_benchmark._ace_tools_api._message_api --> agentscope.evaluate._ace_benchmark._ace_tools_api._shared_state
+agentscope.evaluate._ace_benchmark._ace_tools_api._reminder_api --> agentscope.evaluate._ace_benchmark._ace_tools_api._shared_state
+agentscope.evaluate._ace_benchmark._ace_tools_zh --> agentscope.evaluate._ace_benchmark._ace_tools_api
+agentscope.evaluate._benchmark_base --> agentscope.evaluate._task
+agentscope.evaluate._evaluator --> agentscope.evaluate._evaluator._evaluator_base
+agentscope.evaluate._evaluator --> agentscope.evaluate._evaluator._general_evaluator
+agentscope.evaluate._evaluator --> agentscope.evaluate._evaluator._ray_evaluator
+agentscope.evaluate._evaluator._general_evaluator --> agentscope.evaluate._evaluator._evaluator_base
+agentscope.evaluate._evaluator_storage --> agentscope.evaluate._evaluator_storage._evaluator_storage_base
+agentscope.evaluate._evaluator_storage --> agentscope.evaluate._evaluator_storage._file_evaluator_storage
+agentscope.evaluate._evaluator_storage._file_evaluator_storage --> agentscope.evaluate._evaluator_storage._evaluator_storage_base
+agentscope.evaluate._task --> agentscope.evaluate._metric_base
+agentscope.evaluate._task --> agentscope.evaluate._solution
+agentscope.exception --> agentscope.exception._exception_base
+agentscope.exception --> agentscope.exception._tool
+agentscope.exception._tool --> agentscope.exception._exception_base
+agentscope.formatter --> agentscope.formatter._anthropic_formatter
+agentscope.formatter --> agentscope.formatter._dashscope_formatter
+agentscope.formatter --> agentscope.formatter._deepseek_formatter
+agentscope.formatter --> agentscope.formatter._formatter_base
+agentscope.formatter --> agentscope.formatter._gemini_formatter
+agentscope.formatter --> agentscope.formatter._ollama_formatter
+agentscope.formatter --> agentscope.formatter._openai_formatter
+agentscope.formatter --> agentscope.formatter._truncated_formatter_base
+agentscope.formatter._anthropic_formatter --> agentscope.formatter._truncated_formatter_base
+agentscope.formatter._dashscope_formatter --> agentscope.formatter._truncated_formatter_base
+agentscope.formatter._deepseek_formatter --> agentscope.formatter._truncated_formatter_base
+agentscope.formatter._gemini_formatter --> agentscope.formatter._truncated_formatter_base
+agentscope.formatter._ollama_formatter --> agentscope.formatter._truncated_formatter_base
+agentscope.formatter._openai_formatter --> agentscope.formatter._truncated_formatter_base
+agentscope.formatter._truncated_formatter_base --> agentscope.formatter._formatter_base
+agentscope.hooks --> agentscope.agent
+agentscope.hooks --> agentscope.hooks._studio_hooks
+agentscope.mcp --> agentscope.mcp._client_base
+agentscope.mcp --> agentscope.mcp._http_stateful_client
+agentscope.mcp --> agentscope.mcp._http_stateless_client
+agentscope.mcp --> agentscope.mcp._mcp_function
+agentscope.mcp --> agentscope.mcp._stateful_client_base
+agentscope.mcp --> agentscope.mcp._stdio_stateful_client
+agentscope.mcp._http_stateful_client --> agentscope.mcp._stateful_client_base
+agentscope.mcp._http_stateless_client --> agentscope.mcp._client_base
+agentscope.mcp._mcp_function --> agentscope.mcp._client_base
+agentscope.mcp._stateful_client_base --> agentscope.mcp._client_base
+agentscope.mcp._stateful_client_base --> agentscope.mcp._mcp_function
+agentscope.mcp._stdio_stateful_client --> agentscope.mcp._stateful_client_base
+agentscope.memory --> agentscope.memory._in_memory_memory
+agentscope.memory --> agentscope.memory._long_term_memory_base
+agentscope.memory --> agentscope.memory._mem0_long_term_memory
+agentscope.memory --> agentscope.memory._memory_base
+agentscope.memory --> agentscope.memory._reme
+agentscope.memory._in_memory_memory --> agentscope.memory._memory_base
+agentscope.memory._mem0_long_term_memory --> agentscope.memory._long_term_memory_base
+agentscope.memory._reme --> agentscope.memory._reme._reme_personal_long_term_memory
+agentscope.memory._reme --> agentscope.memory._reme._reme_task_long_term_memory
+agentscope.memory._reme --> agentscope.memory._reme._reme_tool_long_term_memory
+agentscope.memory._reme._reme_personal_long_term_memory --> agentscope.memory._reme._reme_long_term_memory_base
+agentscope.memory._reme._reme_task_long_term_memory --> agentscope.memory._reme._reme_long_term_memory_base
+agentscope.memory._reme._reme_tool_long_term_memory --> agentscope.memory._reme._reme_long_term_memory_base
+agentscope.message --> agentscope.message._message_base
+agentscope.message --> agentscope.message._message_block
+agentscope.message._message_base --> agentscope.message._message_block
+agentscope.model --> agentscope.model._anthropic_model
+agentscope.model --> agentscope.model._dashscope_model
+agentscope.model --> agentscope.model._gemini_model
+agentscope.model --> agentscope.model._model_base
+agentscope.model --> agentscope.model._model_response
+agentscope.model --> agentscope.model._ollama_model
+agentscope.model --> agentscope.model._openai_model
+agentscope.model --> agentscope.model._trinity_model
+agentscope.model._anthropic_model --> agentscope.model._model_base
+agentscope.model._anthropic_model --> agentscope.model._model_response
+agentscope.model._anthropic_model --> agentscope.model._model_usage
+agentscope.model._dashscope_model --> agentscope.model._model_base
+agentscope.model._dashscope_model --> agentscope.model._model_response
+agentscope.model._dashscope_model --> agentscope.model._model_usage
+agentscope.model._gemini_model --> agentscope.model._model_base
+agentscope.model._gemini_model --> agentscope.model._model_response
+agentscope.model._gemini_model --> agentscope.model._model_usage
+agentscope.model._model_base --> agentscope.model._model_response
+agentscope.model._model_response --> agentscope.model._model_usage
+agentscope.model._ollama_model --> agentscope.model._model_base
+agentscope.model._ollama_model --> agentscope.model._model_usage
+agentscope.model._openai_model --> agentscope.model._model_base
+agentscope.model._openai_model --> agentscope.model._model_usage
+agentscope.model._trinity_model --> agentscope.model._openai_model
+agentscope.module --> agentscope.module._state_module
+agentscope.pipeline --> agentscope.pipeline._class
+agentscope.pipeline --> agentscope.pipeline._functional
+agentscope.pipeline --> agentscope.pipeline._msghub
+agentscope.pipeline._class --> agentscope.pipeline._functional
+agentscope.plan --> agentscope.plan._in_memory_storage
+agentscope.plan --> agentscope.plan._plan_model
+agentscope.plan --> agentscope.plan._plan_notebook
+agentscope.plan --> agentscope.plan._storage_base
+agentscope.plan._in_memory_storage --> agentscope.plan._plan_model
+agentscope.plan._in_memory_storage --> agentscope.plan._storage_base
+agentscope.plan._plan_notebook --> agentscope.plan._in_memory_storage
+agentscope.plan._plan_notebook --> agentscope.plan._plan_model
+agentscope.plan._plan_notebook --> agentscope.plan._storage_base
+agentscope.plan._storage_base --> agentscope.module
+agentscope.plan._storage_base --> agentscope.plan._plan_model
+agentscope.rag --> agentscope.rag._document
+agentscope.rag --> agentscope.rag._knowledge_base
+agentscope.rag --> agentscope.rag._reader
+agentscope.rag --> agentscope.rag._simple_knowledge
+agentscope.rag --> agentscope.rag._store
+agentscope.rag._knowledge_base --> agentscope.rag._reader
+agentscope.rag._knowledge_base --> agentscope.rag._store
+agentscope.rag._reader --> agentscope.rag._reader._image_reader
+agentscope.rag._reader --> agentscope.rag._reader._pdf_reader
+agentscope.rag._reader --> agentscope.rag._reader._reader_base
+agentscope.rag._reader --> agentscope.rag._reader._text_reader
+agentscope.rag._reader --> agentscope.rag._reader._word_reader
+agentscope.rag._reader._pdf_reader --> agentscope.rag._reader._reader_base
+agentscope.rag._reader._pdf_reader --> agentscope.rag._reader._text_reader
+agentscope.rag._reader._text_reader --> agentscope.rag._reader._reader_base
+agentscope.rag._reader._word_reader --> agentscope.rag._reader._reader_base
+agentscope.rag._reader._word_reader --> agentscope.rag._reader._text_reader
+agentscope.rag._simple_knowledge --> agentscope.rag._knowledge_base
+agentscope.rag._simple_knowledge --> agentscope.rag._reader
+agentscope.rag._store --> agentscope.rag._store._milvuslite_store
+agentscope.rag._store --> agentscope.rag._store._qdrant_store
+agentscope.rag._store --> agentscope.rag._store._store_base
+agentscope.rag._store._milvuslite_store --> agentscope.rag._store._store_base
+agentscope.rag._store._qdrant_store --> agentscope.rag._store._store_base
+agentscope.session --> agentscope.session._json_session
+agentscope.session --> agentscope.session._session_base
+agentscope.session._json_session --> agentscope.session._session_base
+agentscope.token --> agentscope.token._anthropic_token_counter
+agentscope.token --> agentscope.token._gemini_token_counter
+agentscope.token --> agentscope.token._huggingface_token_counter
+agentscope.token --> agentscope.token._openai_token_counter
+agentscope.token --> agentscope.token._token_base
+agentscope.token._gemini_token_counter --> agentscope.token._token_base
+agentscope.token._huggingface_token_counter --> agentscope.token._token_base
+agentscope.token._openai_token_counter --> agentscope.token._token_base
+agentscope.tool --> agentscope.tool._coding
+agentscope.tool --> agentscope.tool._multi_modality
+agentscope.tool --> agentscope.tool._response
+agentscope.tool --> agentscope.tool._text_file
+agentscope.tool --> agentscope.tool._toolkit
+agentscope.tool._async_wrapper --> agentscope.tool._response
+agentscope.tool._coding --> agentscope.tool._coding._python
+agentscope.tool._coding --> agentscope.tool._coding._shell
+agentscope.tool._multi_modality --> agentscope.tool._multi_modality._dashscope_tools
+agentscope.tool._multi_modality --> agentscope.tool._multi_modality._openai_tools
+agentscope.tool._registered_tool_function --> agentscope.tool._response
+agentscope.tool._text_file --> agentscope.tool._text_file._view_text_file
+agentscope.tool._text_file --> agentscope.tool._text_file._write_text_file
+agentscope.tool._text_file._view_text_file --> agentscope.tool._text_file._write_text_file
+agentscope.tool._text_file._write_text_file --> agentscope.tool._text_file._utils
+agentscope.tool._toolkit --> agentscope.tool._async_wrapper
+agentscope.tool._toolkit --> agentscope.tool._registered_tool_function
+agentscope.tool._toolkit --> agentscope.tool._response
+agentscope.tracing --> agentscope.tracing._setup
+agentscope.tracing --> agentscope.tracing._trace
+agentscope.tracing._setup --> agentscope
+agentscope.tracing._setup --> agentscope._config
+agentscope.tracing._trace --> agentscope.tracing._attributes
+agentscope.tracing._trace --> agentscope.tracing._types
+agentscope.tune --> agentscope.tune._tune
+agentscope.tune --> agentscope.tune._workflow
+agentscope.tune._tune --> agentscope.tune._workflow
+agentscope.types --> agentscope.types._hook
+agentscope.types --> agentscope.types._json
+agentscope.types --> agentscope.types._object
+agentscope.types --> agentscope.types._tool
+agentscope.agent._agent_meta ..> agentscope.agent._agent_base
+@enduml
